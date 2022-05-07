@@ -1,7 +1,7 @@
 import React from "react";
 import { ThemeProvider, CssBaseline } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
-import { selectThemeMode } from "Redux/slices/themeMode";
+import { selectThemeMode } from "Redux/slices/themeModeSlice";
 import { useAppSelector } from "Redux/store";
 
 interface ThemeLayoutProps {

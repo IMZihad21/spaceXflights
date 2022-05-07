@@ -5,13 +5,13 @@ import { FlightType } from "Interfaces/FlightType";
 // Define a type for the slice state
 interface FlightState {
   loading: Boolean;
-  flights: Array<FlightType> | null;
+  data: Array<FlightType> | null;
 }
 
 // Define the initial state using that type
 const initialState: FlightState = {
   loading: false,
-  flights: null,
+  data: null,
 };
 
 const flightSlice = createSlice({
@@ -23,11 +23,11 @@ const flightSlice = createSlice({
       state.loading = true;
     },
     getFlightsSuccess: (state, { payload }) => {
-      state.flights = payload;
+      state.data = payload;
       state.loading = false;
     },
     getFlightsFailure: (state) => {
-      state.flights = null;
+      state.data = null;
       state.loading = false;
     },
   },
@@ -39,8 +39,8 @@ export const { getFlights, getFlightsSuccess, getFlightsFailure } =
 // Other code such as selectors can use the imported `RootState` type
 export const selectFlights = (state: RootState) => state.flights;
 // Get a flight data by its id from the store
-export const selectFlightDetails = (state: RootState, id: number) =>
-  state.flights?.find((flight: FlightType) => flight.flight_number === id);
+export const selectFlightDetails = (id: string) => (state: RootState) =>
+  state.flights.data?.find((flight) => flight.flight_number === Number(id));
 
 export default flightSlice.reducer;
 

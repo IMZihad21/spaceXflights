@@ -1,9 +1,12 @@
 import React from "react";
 import { Box, Container } from "@mui/material";
-import { useRoutes } from "react-router-dom";
+import { Outlet, useRoutes } from "react-router-dom";
+import { useAppDispatch } from "Redux/store";
+import { thunkFetchFlights } from "Redux/slices/flightSlice";
 import NavBar from "Components/NavBar";
 import Footer from "Components/Footer";
 import Home from "Pages/Home";
+import Details from "Pages/Details";
 
 interface RoutesType {
   path: string;
@@ -12,13 +15,32 @@ interface RoutesType {
 }
 
 function App() {
+  // Start fetching flights on mount
+  const dispatch = useAppDispatch();
+
+  React.useEffect(() => {
+    dispatch(thunkFetchFlights());
+  }, [ dispatch ]);
+
+  // Define routes for the app
   const routes: Array<RoutesType> = [
     {
       path: "/",
-      element: <Home />,
+      element: <Outlet />,
+      children: [
+        {
+          path: "",
+          element: <Home />,
+        },
+        {
+          path: "details/:id",
+          element: <Details />,
+        }
+      ]
     },
   ];
 
+  // Render the routes
   const allRoutes = useRoutes(routes);
 
   return (

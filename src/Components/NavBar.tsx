@@ -11,7 +11,7 @@ import {
 import useScrollTrigger from "@mui/material/useScrollTrigger";
 import Slide from "@mui/material/Slide";
 import { useAppDispatch } from "Redux/store";
-import { switchThemeMode } from "Redux/slices/themeMode";
+import { switchThemeMode } from "Redux/slices/themeModeSlice";
 import NavigationIcon from "@mui/icons-material/Navigation";
 
 const NavBar = () => {
