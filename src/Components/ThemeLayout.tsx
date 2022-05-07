@@ -52,6 +52,17 @@ const ThemeLayout: React.FC<ThemeLayoutProps> = ({ children }) => {
           },
         },
       },
+      MuiButton: {
+        styleOverrides: {
+          containedPrimary: {
+            color: themeMode === "light" ? "#fff" : "#000",
+            backgroundColor: themeMode === "light" ? "#000" : "#fff",
+            "&:hover": {
+              backgroundColor: themeMode === "light" ? "#000" : "#fff",
+            },
+          },
+        },
+      },
     },
   });
   return (
