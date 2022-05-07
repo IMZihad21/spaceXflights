@@ -1,8 +1,11 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { configureStore } from "@reduxjs/toolkit";
+import themeModeSlice from "Redux/slices/themeMode";
 
 const store = configureStore({
-  reducer: {},
+  reducer: {
+    themeMode: themeModeSlice,
+  },
 });
 
 export default store;
