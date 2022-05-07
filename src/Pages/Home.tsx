@@ -13,7 +13,11 @@ const Home = () => {
   return (
     <Box>
       <Typography variant="h1">This is home</Typography>
-      <Typography variant="subtitle1">{JSON.stringify(flights)}</Typography>
+      <Typography variant="subtitle1">
+        {!flights.loading &&
+          flights.flights?.length &&
+          JSON.stringify(flights.flights![0])}
+      </Typography>
     </Box>
   );
 };
