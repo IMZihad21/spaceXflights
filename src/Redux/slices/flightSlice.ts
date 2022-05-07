@@ -37,12 +37,13 @@ export const { getFlights, getFlightsSuccess, getFlightsFailure } =
   flightSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectFlights = (state: RootState) => state.flights.flights;
+export const selectFlights = (state: RootState) => state.flights;
 
 export default flightSlice.reducer;
 
 export const thunkFetchFlights =
   (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
+    dispatch(getFlights());
     try {
       const response = await fetch("https://api.spacexdata.com/v3/launches");
       const data = await response.json();
@@ -51,18 +52,3 @@ export const thunkFetchFlights =
       dispatch(getFlightsFailure());
     }
   };
-
-// export function fetchRecipes() {
-//   return async (dispatch) => {
-//     dispatch(getFlights());
-
-//     try {
-//       const response = await fetch("https://api.spacexdata.com/v3/launches");
-//       const data = await response.json();
-
-//       dispatch(getFlightsSuccess(data));
-//     } catch (error) {
-//       dispatch(getFlightsFailure());
-//     }
-//   };
-// }
