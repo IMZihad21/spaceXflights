@@ -7,12 +7,12 @@ import { useParams } from "react-router-dom";
 const Details = () => {
   const { id } = useParams();
   const flightInfo = useAppSelector(selectFlightDetails(id!));
-  return <Box>
-    <Typography variant="h1">This is details</Typography>
-    <Typography variant="subtitle1">
-      {JSON.stringify(flightInfo)}
-    </Typography>
-  </Box>;
+  return (
+    <Box>
+      <Typography variant="h1">This is details</Typography>
+      <Typography variant="subtitle1">{JSON.stringify(flightInfo)}</Typography>
+    </Box>
+  );
 };
 
 export default Details;

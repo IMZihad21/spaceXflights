@@ -20,7 +20,7 @@ function App() {
 
   React.useEffect(() => {
     dispatch(thunkFetchFlights());
-  }, [ dispatch ]);
+  }, [dispatch]);
 
   // Define routes for the app
   const routes: Array<RoutesType> = [
@@ -35,8 +35,8 @@ function App() {
         {
           path: "details/:id",
           element: <Details />,
-        }
-      ]
+        },
+      ],
     },
   ];
 

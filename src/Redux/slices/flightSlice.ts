@@ -4,7 +4,7 @@ import { FlightType } from "Interfaces/FlightType";
 
 // Define a type for the slice state
 interface FlightState {
-  loading: Boolean;
+  loading: boolean;
   data: Array<FlightType> | null;
 }
 

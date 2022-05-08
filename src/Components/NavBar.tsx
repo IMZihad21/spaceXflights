@@ -47,11 +47,7 @@ const NavBar = () => {
               justifyContent: "space-between",
             }}
           >
-            <Typography
-              variant="h6"
-              component={Link}
-              to="/"
-            >
+            <Typography variant="h6" component={Link} to="/">
               SpaceX
             </Typography>
             <Button
