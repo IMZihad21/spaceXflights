@@ -54,6 +54,7 @@ function App() {
     >
       <NavBar />
       <Container
+        component="main"
         sx={{
           flexGrow: 1,
         }}

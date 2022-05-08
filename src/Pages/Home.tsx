@@ -34,7 +34,7 @@ const Home = () => {
       {
         loading ?
           <Typography variant="subtitle1">Loading...</Typography> :
-          <Grid container rowSpacing={5} >
+          <Grid container spacing={3} >
             {
               data?.map((flight, idx) => (
                 <Grid item key={idx} xs={12} md={4}>

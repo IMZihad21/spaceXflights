@@ -6,22 +6,36 @@ interface FlightCardProps {
     flight: FlightType;
 }
 
-const FlightCard: React.FC<FlightCardProps> = () => {
+const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
     return (
-        <Card sx={{ maxWidth: 345 }}>
+        <Card
+            raised
+            sx={{
+                width: 1,
+                height: 1,
+                display: 'flex',
+                flexDirection: 'column',
+            }}
+        >
             <CardMedia
                 component="img"
                 height="140"
                 image="/static/images/cards/contemplative-reptile.jpg"
                 alt="green iguana"
             />
-            <CardContent>
+            <CardContent sx={{
+                flexGrow: 1,
+            }}>
                 <Typography gutterBottom variant="h5" component="div">
-                    Lizard
+                    {flight.mission_name}
                 </Typography>
                 <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with over 6,000
-                    species, ranging across all continents except Antarctica
+                    {
+                        flight.details ?
+                            flight.details?.length > 100 ?
+                                flight.details.substring(0, 90) + ' ...' :
+                                flight.details : 'No details available'
+                    }
                 </Typography>
             </CardContent>
             <CardActions>
