@@ -1,28 +1,48 @@
 import React from "react";
-import { Box, Button, Typography } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useAppSelector } from "Redux/store";
 import { selectFlights } from "Redux/slices/flightSlice";
-import { Link } from "react-router-dom";
+import FlightCard from 'Components/FlightCard';
 
 const Home = () => {
   const { loading, data } = useAppSelector(selectFlights);
 
   return (
     <Box>
-      <Typography variant="h1">This is home</Typography>
+      <Box sx={{
+        marginTop: "1rem",
+        marginBottom: "3rem",
+      }}>
+        <Typography
+          component="h1"
+          variant="body1"
+          sx={{
+            fontSize: "2rem",
+          }}
+        >
+          Space X Flights 🚀
+        </Typography>
+        <Typography
+          variant='body2'
+          sx={{
+            fontSize: "1.2rem",
+          }}
+        >
+          We are not affiliated, associated, authorized, endorsed by, or in any way officially connected with Space Exploration Technologies Corp (SpaceX), or any of its subsidiaries or its affiliates. The names SpaceX as well as related names, marks, emblems and images are registered trademarks of their respective owners.
+        </Typography>
+      </Box>
       {
         loading ?
           <Typography variant="subtitle1">Loading...</Typography> :
-          data?.map((flight, idx) => (
-            <Button
-              component={Link}
-              variant="outlined"
-              key={idx}
-              to={`/details/${flight.flight_number}`}
-            >
-              {flight.mission_name}
-            </Button>
-          ))
+          <Grid container rowSpacing={5} >
+            {
+              data?.map((flight, idx) => (
+                <Grid item key={idx} xs={12} md={4}>
+                  <FlightCard flight={flight} />
+                </Grid>
+              ))
+            }
+          </Grid>
       }
     </Box>
   );

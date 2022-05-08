@@ -12,16 +12,6 @@ const Footer = () => {
       }}
     >
       <Typography
-        variant="subtitle1"
-        sx={{
-          fontSize: "12px",
-          fontWeight: "bold",
-        }}
-      >
-        IMZihad21
-      </Typography>
-
-      <Typography
         variant="body2"
         sx={{
           fontSize: "14px",
@@ -29,6 +19,16 @@ const Footer = () => {
         }}
       >
         SPACEX © 2022
+      </Typography>
+
+      <Typography
+        variant="subtitle1"
+        sx={{
+          fontSize: "12px",
+          fontWeight: "bold",
+        }}
+      >
+        Developed by @IMZihad21
       </Typography>
     </Box>
   );

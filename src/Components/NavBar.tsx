@@ -13,6 +13,7 @@ import Slide from "@mui/material/Slide";
 import { useAppDispatch } from "Redux/store";
 import { switchThemeMode } from "Redux/slices/themeModeSlice";
 import NavigationIcon from "@mui/icons-material/Navigation";
+import { Link } from "react-router-dom";
 
 const NavBar = () => {
   const trigger = useScrollTrigger();
@@ -46,7 +47,13 @@ const NavBar = () => {
               justifyContent: "space-between",
             }}
           >
-            <Typography variant="h6">SpaceX</Typography>
+            <Typography
+              variant="h6"
+              component={Link}
+              to="/"
+            >
+              SpaceX
+            </Typography>
             <Button
               variant="contained"
               onClick={() => dispatch(switchThemeMode())}
