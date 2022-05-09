@@ -1,12 +1,14 @@
 import React, { Fragment } from "react";
 import { Box, Grid, Typography, LinearProgress } from "@mui/material";
 import { useAppSelector } from "Redux/store";
-import { selectFlights } from "Redux/slices/flightSlice";
+import { selectFlights, selectLoadingState } from "Redux/slices/flightSlice";
 import FlightCard from "Components/FlightCard";
 import Filters from "Components/Filters";
+import { FlightType } from "Interfaces/FlightType";
 
 const Home = () => {
-  const { loading, data } = useAppSelector(selectFlights);
+  const loading = useAppSelector(selectLoadingState);
+  const flightData = useAppSelector(selectFlights);
 
   return (
     <Box>
@@ -63,7 +65,7 @@ const Home = () => {
           {/* Add filter component */}
           <Filters />
           <Grid container spacing={3}>
-            {data?.map((flight, idx) => (
+            {flightData?.map((flight: FlightType, idx: number) => (
               <Grid item key={idx} xs={12} md={4}>
                 <FlightCard flight={flight} />
               </Grid>

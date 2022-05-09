@@ -2,8 +2,15 @@ import { AnyAction, createSlice, ThunkAction } from "@reduxjs/toolkit";
 import type { RootState } from "Redux/store";
 import { FlightType } from "Interfaces/FlightType";
 
+interface FilterState {
+  lunchTime: string | null;
+  lunchStatus: string | null;
+  lunchTags: string | null;
+  rocketName: string | null;
+}
+
 // Define a type for the slice state
-interface FlightState {
+interface FlightState extends FilterState {
   loading: boolean;
   data: Array<FlightType> | null;
 }
@@ -12,6 +19,10 @@ interface FlightState {
 const initialState: FlightState = {
   loading: false,
   data: null,
+  lunchTime: "",
+  lunchStatus: "",
+  lunchTags: "",
+  rocketName: "",
 };
 
 const flightSlice = createSlice({
@@ -30,18 +41,51 @@ const flightSlice = createSlice({
       state.data = null;
       state.loading = false;
     },
+    setFilterRocketName: (state, { payload }) => {
+      state.rocketName = payload;
+      console.log(state.rocketName);
+    },
   },
 });
 
-export const { getFlights, getFlightsSuccess, getFlightsFailure } =
-  flightSlice.actions;
+export const {
+  getFlights,
+  getFlightsSuccess,
+  getFlightsFailure,
+  setFilterRocketName,
+} = flightSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
-export const selectFlights = (state: RootState) => state.flights;
+export const selectLoadingState = (state: RootState) => state.flights.loading;
+export const selectFlights = (state: RootState) => {
+  const { lunchTime, lunchStatus, lunchTags, rocketName, data } = state.flights;
+  if (!(lunchTime || lunchStatus || lunchTags || rocketName)) {
+    return state.flights.data;
+  }
+
+  return data?.filter((flight) => {
+    // if (lunchTime && flight.lunchTime !== lunchTime) {
+    //   return false;
+    // }
+    // if (lunchStatus && flight.lunchStatus !== lunchStatus) {
+    //   return false;
+    // }
+    // if (lunchTags && flight.lunchTags !== lunchTags) {
+    //   return false;
+    // }
+    if (
+      rocketName &&
+      flight.rocket.rocket_name
+        .toLocaleLowerCase()
+        .includes(rocketName.toLocaleLowerCase())
+    ) {
+      return true;
+    }
+  });
+};
 // Get a flight data by its id from the store
-export const selectFlightDetails =
-  (id: string | number) => (state: RootState) =>
-    state.flights.data?.find((flight) => flight.flight_number === Number(id));
+export const selectFlightDetails = (id: string) => (state: RootState) =>
+  state.flights.data?.find((flight) => flight.flight_number === Number(id));
 
 export default flightSlice.reducer;
 

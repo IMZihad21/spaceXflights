@@ -1,7 +1,15 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
+import { useAppDispatch } from "Redux/store";
+import { setFilterRocketName } from "Redux/slices/flightSlice";
 
 const Filters = () => {
+  const dispatch = useAppDispatch();
+
+  const handleFilterRocketName = (event: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setFilterRocketName(event.currentTarget.value));
+  };
+
   return (
     <Grid container>
       <Grid
@@ -88,6 +96,7 @@ const Filters = () => {
         <TextField
           variant="outlined"
           size="small"
+          onChange={handleFilterRocketName}
           sx={{
             border: "1px solid #ccc",
             borderRadius: "5px",

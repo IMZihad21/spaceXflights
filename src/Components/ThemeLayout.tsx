@@ -40,21 +40,6 @@ const ThemeLayout: React.FC<ThemeLayoutProps> = ({ children }) => {
           },
         },
       },
-      MuiTabs: {
-        styleOverrides: {
-          root: {
-            "& .MuiTabs-indicator": {
-              backgroundColor:
-                themeMode === "light" ? "#000 !important" : "#fff !important",
-            },
-            "& .Mui-selected": {
-              color:
-                themeMode === "light" ? "#000 !important" : "#fff !important",
-              fontWeight: "600",
-            },
-          },
-        },
-      },
       MuiButton: {
         styleOverrides: {
           root: {
