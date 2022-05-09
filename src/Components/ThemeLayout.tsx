@@ -26,6 +26,9 @@ const ThemeLayout: React.FC<ThemeLayoutProps> = ({ children }) => {
       contrastThreshold: 3,
       tonalOffset: 0.2,
     },
+    typography: {
+      fontFamily: ["Poppins", "sans-serif"].join(","),
+    },
     components: {
       MuiCssBaseline: {
         styleOverrides: {
