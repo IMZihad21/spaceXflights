@@ -3,9 +3,9 @@ import type { RootState } from "Redux/store";
 import { FlightType } from "Interfaces/FlightType";
 
 interface FilterState {
-  lunchTime: string | null;
-  lunchStatus: string | null;
-  lunchTags: string | null;
+  launchTime: number | null;
+  launchStatus: string | null;
+  launchTags: string | null;
   rocketName: string | null;
 }
 
@@ -19,10 +19,10 @@ interface FlightState extends FilterState {
 const initialState: FlightState = {
   loading: false,
   data: null,
-  lunchTime: "",
-  lunchStatus: "",
-  lunchTags: "",
-  rocketName: "",
+  launchTime: null,
+  launchStatus: null,
+  launchTags: null,
+  rocketName: null,
 };
 
 const flightSlice = createSlice({
@@ -43,7 +43,9 @@ const flightSlice = createSlice({
     },
     setFilterRocketName: (state, { payload }) => {
       state.rocketName = payload;
-      console.log(state.rocketName);
+    },
+    setFilterLaunchTime: (state, { payload }) => {
+      state.launchTime = payload;
     },
   },
 });
@@ -53,25 +55,29 @@ export const {
   getFlightsSuccess,
   getFlightsFailure,
   setFilterRocketName,
+  setFilterLaunchTime,
 } = flightSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectLoadingState = (state: RootState) => state.flights.loading;
 export const selectFlights = (state: RootState) => {
-  const { lunchTime, lunchStatus, lunchTags, rocketName, data } = state.flights;
-  if (!(lunchTime || lunchStatus || lunchTags || rocketName)) {
+  const { launchTime, launchStatus, launchTags, rocketName, data } =
+    state.flights;
+  if (!(launchTime || launchStatus || launchTags || rocketName)) {
     return state.flights.data;
   }
 
   return data?.filter((flight) => {
-    // if (lunchTime && flight.lunchTime !== lunchTime) {
+    if (launchTime && flight.launch_date_unix > Number(launchTime)) {
+      return true;
+    }
+    // if (launchStatus && flight.launchStatus !== launchStatus) {
     //   return false;
     // }
-    // if (lunchStatus && flight.lunchStatus !== lunchStatus) {
+    // if (launchTags && flight.launchTags !== launchTags) {
     //   return false;
-    // }
-    // if (lunchTags && flight.lunchTags !== lunchTags) {
-    //   return false;
+    // 1607880600
+    // 1336568353
     // }
     if (
       rocketName &&

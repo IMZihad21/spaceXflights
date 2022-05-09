@@ -1,13 +1,53 @@
 import React, { ChangeEvent } from "react";
 import { Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { useAppDispatch } from "Redux/store";
-import { setFilterRocketName } from "Redux/slices/flightSlice";
+import {
+  setFilterLaunchTime,
+  setFilterRocketName,
+} from "Redux/slices/flightSlice";
 
 const Filters = () => {
   const dispatch = useAppDispatch();
 
   const handleFilterRocketName = (event: ChangeEvent<HTMLInputElement>) => {
     dispatch(setFilterRocketName(event.currentTarget.value));
+  };
+
+  const handleFilterLaunchTime = (time: string) => {
+    const date = new Date();
+    switch (time) {
+      case "lastWeek":
+        dispatch(
+          setFilterLaunchTime(
+            Math.round(date.setDate(date.getDate() - 7) / 1000)
+          )
+        );
+        break;
+      case "lastMonth":
+        dispatch(
+          setFilterLaunchTime(
+            Math.round(date.setMonth(date.getMonth() - 1) / 1000)
+          )
+        );
+        break;
+      case "lastYear":
+        dispatch(
+          setFilterLaunchTime(
+            Math.round(date.setFullYear(date.getFullYear() - 1) / 1000)
+          )
+        );
+        break;
+      case "lastTwoYears":
+        dispatch(
+          setFilterLaunchTime(
+            Math.round(date.setFullYear(date.getFullYear() - 2) / 1000)
+          )
+        );
+        break;
+      default:
+        dispatch(setFilterLaunchTime(null));
+        break;
+    }
   };
 
   return (
@@ -22,6 +62,7 @@ const Filters = () => {
       >
         <Typography variant="subtitle1">Launch Time:</Typography>
         <Select
+          onChange={(e) => handleFilterLaunchTime(e.target.value as string)}
           size="small"
           defaultValue="all"
           sx={{
@@ -35,6 +76,7 @@ const Filters = () => {
           <MenuItem value="lastWeek">Last Week</MenuItem>
           <MenuItem value="lastMonth">Last Month</MenuItem>
           <MenuItem value="lastYear">Last Year</MenuItem>
+          <MenuItem value="lastTwoYears">Last Two Year</MenuItem>
         </Select>
       </Grid>
       <Grid
