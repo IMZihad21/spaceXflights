@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Box, Container } from "@mui/material";
-import { Outlet, useRoutes } from "react-router-dom";
+import { Navigate, Outlet, useRoutes } from "react-router-dom";
 import { useAppDispatch } from "Redux/store";
 import { thunkFetchFlights } from "Redux/slices/flightSlice";
 import NavBar from "Components/NavBar";
@@ -18,7 +18,7 @@ function App() {
   // Start fetching flights on mount
   const dispatch = useAppDispatch();
 
-  React.useEffect(() => {
+  useEffect(() => {
     dispatch(thunkFetchFlights());
   }, [dispatch]);
 
@@ -35,6 +35,10 @@ function App() {
         {
           path: "details/:id",
           element: <Details />,
+        },
+        {
+          path: "*",
+          element: <Navigate to="/" />,
         },
       ],
     },

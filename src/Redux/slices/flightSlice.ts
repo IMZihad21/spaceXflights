@@ -39,8 +39,9 @@ export const { getFlights, getFlightsSuccess, getFlightsFailure } =
 // Other code such as selectors can use the imported `RootState` type
 export const selectFlights = (state: RootState) => state.flights;
 // Get a flight data by its id from the store
-export const selectFlightDetails = (id: string) => (state: RootState) =>
-  state.flights.data?.find((flight) => flight.flight_number === Number(id));
+export const selectFlightDetails =
+  (id: string | number) => (state: RootState) =>
+    state.flights.data?.find((flight) => flight.flight_number === Number(id));
 
 export default flightSlice.reducer;
 

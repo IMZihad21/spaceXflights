@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 
 const Details = () => {
   const { id } = useParams();
-  const flightInfo = useAppSelector(selectFlightDetails(id!));
+  const flightInfo = useAppSelector(selectFlightDetails(id || ""));
   return (
     <Box>
       <Typography variant="h1">This is details</Typography>
