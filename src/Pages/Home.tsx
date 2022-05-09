@@ -1,8 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Box, Grid, Typography, LinearProgress } from "@mui/material";
 import { useAppSelector } from "Redux/store";
 import { selectFlights } from "Redux/slices/flightSlice";
 import FlightCard from "Components/FlightCard";
+import Filters from "Components/Filters";
 
 const Home = () => {
   const { loading, data } = useAppSelector(selectFlights);
@@ -37,6 +38,7 @@ const Home = () => {
           registered trademarks of their respective owners.
         </Typography>
       </Box>
+
       {loading ? (
         <Box
           sx={{
@@ -57,13 +59,17 @@ const Home = () => {
           <LinearProgress color="warning" />
         </Box>
       ) : (
-        <Grid container spacing={3}>
-          {data?.map((flight, idx) => (
-            <Grid item key={idx} xs={12} md={4}>
-              <FlightCard flight={flight} />
-            </Grid>
-          ))}
-        </Grid>
+        <Fragment>
+          {/* Add filter component */}
+          <Filters />
+          <Grid container spacing={3}>
+            {data?.map((flight, idx) => (
+              <Grid item key={idx} xs={12} md={4}>
+                <FlightCard flight={flight} />
+              </Grid>
+            ))}
+          </Grid>
+        </Fragment>
       )}
     </Box>
   );
