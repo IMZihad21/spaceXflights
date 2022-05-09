@@ -8,7 +8,13 @@ interface ThemeModeState {
 
 // Define the initial state using that type
 const initialState: ThemeModeState = {
-  mode: "dark",
+  mode:
+    localStorage.themeMode === "dark" ||
+    (!("themeMode" in localStorage) &&
+      window.matchMedia &&
+      window.matchMedia("(prefers-color-scheme: dark)").matches)
+      ? "dark"
+      : "light",
 };
 
 const themeModeSlice = createSlice({
@@ -18,6 +24,7 @@ const themeModeSlice = createSlice({
   reducers: {
     switchThemeMode: (state) => {
       state.mode = state.mode === "light" ? "dark" : "light";
+      localStorage.themeMode = state.mode;
     },
   },
 });
