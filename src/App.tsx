@@ -33,7 +33,7 @@ function App() {
           element: <Home />,
         },
         {
-          path: "details/:id",
+          path: "flight/:id",
           element: <Details />,
         },
         {
