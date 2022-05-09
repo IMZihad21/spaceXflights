@@ -153,18 +153,6 @@ const FlightCard: React.FC<FlightCardProps> = ({ flight }) => {
           </Typography>
           <Typography variant="body2">{flight.rocket.rocket_type}</Typography>
         </Box>
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-          }}
-        >
-          <Typography variant="body2" color="text.secondary">
-            Nationality:
-          </Typography>
-          <Typography variant="body2"></Typography>
-        </Box>
       </CardContent>
       <CardActions sx={{ gap: "5px" }}>
         <Button
