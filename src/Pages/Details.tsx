@@ -9,8 +9,9 @@ const Details = () => {
   const flightInfo = useAppSelector(selectFlightDetails(id || ""));
   return (
     <Box>
-      <Typography variant="h1">This is details</Typography>
-      <Typography variant="subtitle1">{JSON.stringify(flightInfo)}</Typography>
+      <Typography variant="h3" component="h1">
+        {flightInfo && flightInfo.mission_name}
+      </Typography>
     </Box>
   );
 };

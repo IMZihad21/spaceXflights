@@ -21,7 +21,7 @@ const ThemeLayout: React.FC<ThemeLayoutProps> = ({ children }) => {
       },
       background: {
         default: themeMode === "light" ? "#fff" : "#000",
-        paper: themeMode === "light" ? "#f1f1f1" : "#0c0c0c",
+        paper: themeMode === "light" ? "#fff" : "#000",
       },
       contrastThreshold: 3,
       tonalOffset: 0.2,
