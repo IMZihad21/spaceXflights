@@ -2,6 +2,7 @@ import { AnyAction, createSlice, ThunkAction } from "@reduxjs/toolkit";
 import type { RootState } from "Redux/store";
 import { FlightType } from "Interfaces/FlightType";
 
+// The initial state of the slice filters
 interface FilterState {
   launchTime: number | null;
   launchStatus: "success" | "failure" | null;
@@ -75,39 +76,95 @@ export const selectFlights = (state: RootState) => {
     return state.flights.data;
   }
 
+  // TL;DR: If any filter is set, filter the data and combine the results
   return data?.filter((flight) => {
-    if (launchTime && flight.launch_date_unix > Number(launchTime)) {
-      return true;
+    const isValid = {
+      launchTime: false,
+      launchStatus: false,
+      launchTags: false,
+      rocketName: false,
+    };
+    if (launchTime) {
+      isValid.launchTime = flight.launch_date_unix > Number(launchTime);
     }
     if (launchStatus) {
-      return (
+      isValid.launchStatus =
         flight.launch_success ===
         (launchStatus === "success"
           ? true
           : launchStatus === "failure"
           ? false
-          : null)
-      );
+          : null);
     }
-    if (
-      rocketName &&
-      flight.rocket.rocket_name
+    if (rocketName) {
+      isValid.rocketName = flight.rocket.rocket_name
         .toLocaleLowerCase()
-        .includes(rocketName.toLocaleLowerCase())
-    ) {
-      return true;
+        .includes(rocketName.toLocaleLowerCase());
     }
     if (launchTags) {
-      return flight.upcoming === (launchTags === "upcoming");
+      isValid.launchTags = flight.upcoming === (launchTags === "upcoming");
+    }
+
+    if (launchTime && launchStatus && launchTags && rocketName) {
+      return (
+        isValid.launchTime &&
+        isValid.launchStatus &&
+        isValid.launchTags &&
+        isValid.rocketName
+      );
+    }
+    if (launchTime && launchStatus && launchTags) {
+      return isValid.launchTime && isValid.launchStatus && isValid.launchTags;
+    }
+    if (launchTime && launchStatus && rocketName) {
+      return isValid.launchTime && isValid.launchStatus && isValid.rocketName;
+    }
+    if (launchTime && launchTags && rocketName) {
+      return isValid.launchTime && isValid.launchTags && isValid.rocketName;
+    }
+    if (launchStatus && launchTags && rocketName) {
+      return isValid.launchStatus && isValid.launchTags && isValid.rocketName;
+    }
+    if (launchTime && launchStatus) {
+      return isValid.launchTime && isValid.launchStatus;
+    }
+    if (launchTime && launchTags) {
+      return isValid.launchTime && isValid.launchTags;
+    }
+    if (launchStatus && launchTags) {
+      return isValid.launchStatus && isValid.launchTags;
+    }
+    if (launchTime && rocketName) {
+      return isValid.launchTime && isValid.rocketName;
+    }
+    if (launchStatus && rocketName) {
+      return isValid.launchStatus && isValid.rocketName;
+    }
+    if (launchTags && rocketName) {
+      return isValid.launchTags && isValid.rocketName;
+    }
+    if (launchTime) {
+      return isValid.launchTime;
+    }
+    if (launchStatus) {
+      return isValid.launchStatus;
+    }
+    if (launchTags) {
+      return isValid.launchTags;
+    }
+    if (rocketName) {
+      return isValid.rocketName;
     }
   });
 };
+
 // Get a flight data by its id from the store
 export const selectFlightDetails = (id: string) => (state: RootState) =>
   state.flights.data?.find((flight) => flight.flight_number === Number(id));
 
 export default flightSlice.reducer;
 
+// Export a thunk action creator to fetch data from the API
 export const thunkFetchFlights =
   (): ThunkAction<void, RootState, unknown, AnyAction> => async (dispatch) => {
     dispatch(getFlights());
