@@ -4,11 +4,11 @@ import { FlightType } from "Interfaces/FlightType";
 
 // The initial state of the slice filters
 interface FilterState {
-  launchTime: "lastWeek" | "lastMonth" | "lastYear" | "lastTwoYears" | "" ;
+  launchTime: "lastWeek" | "lastMonth" | "lastYear" | "lastTwoYears" | "";
   launchTimeUnix: number | null;
-  launchStatus: "success" | "failure" | '';
-  launchTags: "upcoming" | "" ;
-  rocketName: string ;
+  launchStatus: "success" | "failure" | "";
+  launchTags: "upcoming" | "";
+  rocketName: string;
 }
 
 // Define a type for the slice state
@@ -23,11 +23,11 @@ const initialState: FlightState = {
   loading: false,
   data: null,
   filters: {
-    launchTime: '',
+    launchTime: "",
     launchTimeUnix: null,
-    launchStatus: '',
-    launchTags: '',
-    rocketName: '',
+    launchStatus: "",
+    launchTags: "",
+    rocketName: "",
   },
 };
 
@@ -76,7 +76,7 @@ const flightSlice = createSlice({
           break;
         default:
           state.filters.launchTimeUnix = null;
-          state.filters.launchTime = '';
+          state.filters.launchTime = "";
           break;
       }
       // state.filters.launchTime = payload;
