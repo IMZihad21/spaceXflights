@@ -15,15 +15,13 @@ const Filters = () => {
     useAppSelector(selectFilterStates);
 
   return (
-    <Grid container>
-      <Grid
-        item
-        xs={12}
-        md={2.5}
-        sx={{
-          mb: { md: 5 },
-        }}
-      >
+    <Grid
+      container
+      sx={{
+        mb: 5,
+      }}
+    >
+      <Grid item xs={12} md={2.5}>
         <Typography variant="subtitle1">Launch Time:</Typography>
         <Select
           onChange={(e) =>

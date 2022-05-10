@@ -16,7 +16,7 @@ const Details = () => {
         variant="h3"
         component="h1"
         gutterBottom
-        sx={{ display: "flex", alignItems: "center" }}
+        sx={{ display: { md: "flex" }, alignItems: "center" }}
       >
         {flightInfo.flight_number} - {flightInfo.mission_name}
         <Typography
