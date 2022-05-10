@@ -2,8 +2,10 @@ import React, { ChangeEvent } from "react";
 import { Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
 import { useAppDispatch } from "Redux/store";
 import {
+  setFilterLaunchStatus,
   setFilterLaunchTime,
   setFilterRocketName,
+  setFilterTags,
 } from "Redux/slices/flightSlice";
 
 const Filters = () => {
@@ -50,6 +52,22 @@ const Filters = () => {
     }
   };
 
+  const handleFilterLaunchStatus = (status: string) => {
+    if (status !== "all") {
+      dispatch(setFilterLaunchStatus(status));
+    } else {
+      dispatch(setFilterLaunchStatus(null));
+    }
+  };
+
+  const handleFilterTags = (tags: string) => {
+    if (tags !== "all") {
+      dispatch(setFilterTags(tags));
+    } else {
+      dispatch(setFilterTags(null));
+    }
+  };
+
   return (
     <Grid container>
       <Grid
@@ -91,6 +109,7 @@ const Filters = () => {
         <Select
           size="small"
           defaultValue="all"
+          onChange={(e) => handleFilterLaunchStatus(e.target.value as string)}
           sx={{
             border: "1px solid #ccc",
             borderRadius: "5px",
@@ -115,6 +134,7 @@ const Filters = () => {
         <Select
           size="small"
           defaultValue="all"
+          onChange={(e) => handleFilterTags(e.target.value as string)}
           sx={{
             border: "1px solid #ccc",
             borderRadius: "5px",

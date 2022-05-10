@@ -4,7 +4,7 @@ import { FlightType } from "Interfaces/FlightType";
 
 interface FilterState {
   launchTime: number | null;
-  launchStatus: string | null;
+  launchStatus: "success" | "failure" | null;
   launchTags: string | null;
   rocketName: string | null;
 }
@@ -47,6 +47,12 @@ const flightSlice = createSlice({
     setFilterLaunchTime: (state, { payload }) => {
       state.launchTime = payload;
     },
+    setFilterLaunchStatus: (state, { payload }) => {
+      state.launchStatus = payload;
+    },
+    setFilterTags: (state, { payload }) => {
+      state.launchTags = payload;
+    },
   },
 });
 
@@ -56,6 +62,8 @@ export const {
   getFlightsFailure,
   setFilterRocketName,
   setFilterLaunchTime,
+  setFilterLaunchStatus,
+  setFilterTags,
 } = flightSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
@@ -71,14 +79,16 @@ export const selectFlights = (state: RootState) => {
     if (launchTime && flight.launch_date_unix > Number(launchTime)) {
       return true;
     }
-    // if (launchStatus && flight.launchStatus !== launchStatus) {
-    //   return false;
-    // }
-    // if (launchTags && flight.launchTags !== launchTags) {
-    //   return false;
-    // 1607880600
-    // 1336568353
-    // }
+    if (launchStatus) {
+      return (
+        flight.launch_success ===
+        (launchStatus === "success"
+          ? true
+          : launchStatus === "failure"
+          ? false
+          : null)
+      );
+    }
     if (
       rocketName &&
       flight.rocket.rocket_name
@@ -86,6 +96,9 @@ export const selectFlights = (state: RootState) => {
         .includes(rocketName.toLocaleLowerCase())
     ) {
       return true;
+    }
+    if (launchTags) {
+      return flight.upcoming === (launchTags === "upcoming");
     }
   });
 };
