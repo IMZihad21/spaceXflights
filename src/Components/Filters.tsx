@@ -1,7 +1,8 @@
-import React, { ChangeEvent } from "react";
+import React from "react";
 import { Grid, MenuItem, Select, TextField, Typography } from "@mui/material";
-import { useAppDispatch } from "Redux/store";
+import { useAppDispatch, useAppSelector } from "Redux/store";
 import {
+  selectFilterStates,
   setFilterLaunchStatus,
   setFilterLaunchTime,
   setFilterRocketName,
@@ -10,63 +11,8 @@ import {
 
 const Filters = () => {
   const dispatch = useAppDispatch();
-
-  const handleFilterRocketName = (event: ChangeEvent<HTMLInputElement>) => {
-    dispatch(setFilterRocketName(event.currentTarget.value));
-  };
-
-  const handleFilterLaunchTime = (time: string) => {
-    const date = new Date();
-    switch (time) {
-      case "lastWeek":
-        dispatch(
-          setFilterLaunchTime(
-            Math.round(date.setDate(date.getDate() - 7) / 1000)
-          )
-        );
-        break;
-      case "lastMonth":
-        dispatch(
-          setFilterLaunchTime(
-            Math.round(date.setMonth(date.getMonth() - 1) / 1000)
-          )
-        );
-        break;
-      case "lastYear":
-        dispatch(
-          setFilterLaunchTime(
-            Math.round(date.setFullYear(date.getFullYear() - 1) / 1000)
-          )
-        );
-        break;
-      case "lastTwoYears":
-        dispatch(
-          setFilterLaunchTime(
-            Math.round(date.setFullYear(date.getFullYear() - 2) / 1000)
-          )
-        );
-        break;
-      default:
-        dispatch(setFilterLaunchTime(null));
-        break;
-    }
-  };
-
-  const handleFilterLaunchStatus = (status: string) => {
-    if (status !== "all") {
-      dispatch(setFilterLaunchStatus(status));
-    } else {
-      dispatch(setFilterLaunchStatus(null));
-    }
-  };
-
-  const handleFilterTags = (tags: string) => {
-    if (tags !== "all") {
-      dispatch(setFilterTags(tags));
-    } else {
-      dispatch(setFilterTags(null));
-    }
-  };
+  const { launchStatus, launchTime, launchTags, rocketName } =
+    useAppSelector(selectFilterStates);
 
   return (
     <Grid container>
@@ -80,9 +26,11 @@ const Filters = () => {
       >
         <Typography variant="subtitle1">Launch Time:</Typography>
         <Select
-          onChange={(e) => handleFilterLaunchTime(e.target.value as string)}
+          onChange={(e) =>
+            dispatch(setFilterLaunchTime(e.target.value as string))
+          }
           size="small"
-          defaultValue="all"
+          value={launchTime}
           sx={{
             border: "1px solid #ccc",
             borderRadius: "5px",
@@ -90,7 +38,9 @@ const Filters = () => {
             height: "35px",
           }}
         >
-          <MenuItem value="all">All Time</MenuItem>
+          <MenuItem value="" sx={{ fontWeight: 200 }}>
+            Clear Filter
+          </MenuItem>
           <MenuItem value="lastWeek">Last Week</MenuItem>
           <MenuItem value="lastMonth">Last Month</MenuItem>
           <MenuItem value="lastYear">Last Year</MenuItem>
@@ -108,8 +58,10 @@ const Filters = () => {
         <Typography variant="subtitle1">Launch Status:</Typography>
         <Select
           size="small"
-          defaultValue="all"
-          onChange={(e) => handleFilterLaunchStatus(e.target.value as string)}
+          value={launchStatus}
+          onChange={(e) =>
+            dispatch(setFilterLaunchStatus(e.target.value as string))
+          }
           sx={{
             border: "1px solid #ccc",
             borderRadius: "5px",
@@ -117,7 +69,9 @@ const Filters = () => {
             height: "35px",
           }}
         >
-          <MenuItem value="all">All Status</MenuItem>
+          <MenuItem value="" sx={{ fontWeight: 200 }}>
+            Clear Filter
+          </MenuItem>
           <MenuItem value="success">Success</MenuItem>
           <MenuItem value="failure">Failure</MenuItem>
         </Select>
@@ -133,8 +87,8 @@ const Filters = () => {
         <Typography variant="subtitle1">Launch Tags:</Typography>
         <Select
           size="small"
-          defaultValue="all"
-          onChange={(e) => handleFilterTags(e.target.value as string)}
+          value={launchTags}
+          onChange={(e) => dispatch(setFilterTags(e.target.value as string))}
           sx={{
             border: "1px solid #ccc",
             borderRadius: "5px",
@@ -142,7 +96,9 @@ const Filters = () => {
             height: "35px",
           }}
         >
-          <MenuItem value="all">All Tags</MenuItem>
+          <MenuItem value="" sx={{ fontWeight: 200 }}>
+            Clear Filter
+          </MenuItem>
           <MenuItem value="upcoming">Upcoming</MenuItem>
         </Select>
       </Grid>
@@ -158,7 +114,10 @@ const Filters = () => {
         <TextField
           variant="outlined"
           size="small"
-          onChange={handleFilterRocketName}
+          value={rocketName}
+          onChange={(event) =>
+            dispatch(setFilterRocketName(event.currentTarget.value))
+          }
           sx={{
             border: "1px solid #ccc",
             borderRadius: "5px",
