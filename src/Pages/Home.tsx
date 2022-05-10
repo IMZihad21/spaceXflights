@@ -1,10 +1,11 @@
 import React, { Fragment } from "react";
-import { Box, Grid, Typography, LinearProgress } from "@mui/material";
+import { Box, Grid, Typography } from "@mui/material";
 import { useAppSelector } from "Redux/store";
 import { selectFlights, selectLoadingState } from "Redux/slices/flightSlice";
 import FlightCard from "Components/FlightCard";
 import Filters from "Components/Filters";
 import { FlightType } from "Interfaces/FlightType";
+import Loading from "Components/Loading";
 
 const Home = () => {
   const loading = useAppSelector(selectLoadingState);
@@ -42,24 +43,7 @@ const Home = () => {
       </Box>
 
       {loading ? (
-        <Box
-          sx={{
-            mx: { md: 30 },
-          }}
-        >
-          <Typography
-            variant="body1"
-            sx={{
-              fontSize: "1.2rem",
-              fontWeight: "600",
-              marginBottom: "1rem",
-              textAlign: "center",
-            }}
-          >
-            Please wait while we fetch the latest SpaceX flights.
-          </Typography>
-          <LinearProgress color="warning" />
-        </Box>
+        <Loading />
       ) : (
         <Fragment>
           {/* Add filter component */}
