@@ -10,7 +10,7 @@ import App from "./App";
 const root = createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename="/spaceXflights">
       <StoreProvider store={store}>
         <ThemeLayout>
           <App />

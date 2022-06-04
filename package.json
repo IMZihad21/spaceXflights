@@ -1,6 +1,7 @@
 {
   "name": "flightapp",
   "version": "0.1.0",
+  "homepage": "/spaceXflights",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.9.0",
